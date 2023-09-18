@@ -1,7 +1,5 @@
-
-// importing the useNavigate hook
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Show(props) {
   // set up nav function with the useNavigate hook
@@ -21,7 +19,7 @@ function Show(props) {
     setEditForm(prevState => ({
       ...prevState,
       [event.target.name]: event.target.value
-    }));
+    }))
   };
 
   const handleUpdate = (event) => {
@@ -63,7 +61,7 @@ function Show(props) {
   return (
     <div className="person">
       { person ? loaded() : loading() }
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleUpdate}>
         <input
           type="text"
           value={editForm.name}

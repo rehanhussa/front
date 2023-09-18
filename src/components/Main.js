@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Index from '../pages/Index';
@@ -7,7 +6,7 @@ import Show from '../pages/Show';
 function Main(props) {
   const [people, setPeople] = useState(null);
 
-  const URL = 'https://express-react-repo-88931931c007.herokuapp.com/people';
+  const URL = `https://express-react-repo-88931931c007.herokuapp.com/people`;
 
   const getPeople = async () => {
     try {
@@ -34,21 +33,9 @@ function Main(props) {
     }
   };
 
-
-// ... more code above
-
-// Inside of Main.js
-
-
-const deletePeople = async (id) => {
-    await fetch(API_URL + id, {
-      method: 'DELETE',
-    });
-    getPeople();
-  };
-
-const updatePeople = async (person, id) => {
-    await fetch(URL + id, {
+  const updatePeople = async (person) => {
+    console.log(person._id)
+    await fetch(URL + '/' + person._id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'Application/json',
@@ -56,6 +43,13 @@ const updatePeople = async (person, id) => {
       body: JSON.stringify(person),
     });
     // update list of people
+    getPeople();
+  };
+
+  const deletePeople = async (id) => {
+    await fetch(URL + '/' + id, {
+      method: 'DELETE',
+    });
     getPeople();
   };
 
@@ -76,16 +70,17 @@ const updatePeople = async (person, id) => {
           }
         />
         <Route
-          path="/people/:id"
-          element={
-            <Show
-              people={people}
-              updatePeople={updatePeople}
-              deletePeople={deletePeople}
+            path="/people/:id"
+            element={
+                <Show
+                people={people}
+                updatePeople={updatePeople}
+                deletePeople={deletePeople}
+                />
+            }
             />
-          }
-        />
       </Routes>
+      
     </main>
   );
 }
